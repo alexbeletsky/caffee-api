@@ -14,6 +14,7 @@ app.use(bodyParser.json());
 app.use(methodOverride());
 
 require('./source/health')(app);
+require('./source/auth')(app);
 require('./source/caffee')(app);
 
 app.listen(port, function () {
