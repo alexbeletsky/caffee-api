@@ -1,0 +1,11 @@
+{
+  "name": "caffee-api",
+  "version": "0.0.1",
+  "description": "Caffee API for front-end development master class",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "alexander.beletsky@gmail.com",
+  "license": "MIT"
+}
