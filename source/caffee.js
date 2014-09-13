@@ -1,5 +1,6 @@
 var _ = require('underscore');
 var caffees = require('../data/caffees');
+var bookings = require('../data/bookings');
 
 function caffee(app) {
 	app.route('/api/caffees').get(function (req, res) {
@@ -39,7 +40,45 @@ function caffee(app) {
 	});
 
 	app.route('/api/caffees/:id/book').post(function (req, res) {
+		var message = req.body.message;
 
+		if (!message) {
+			return res.status(412).end();
+		}
+
+		var caffee = _.find(caffees, function (c) {
+			return c._id === req.params.id;
+		});
+
+		if (!caffee) {
+			return res.status(404).end();
+		}
+
+		caffee = {
+			id: caffee._id,
+			name: caffee.name,
+			address: caffee.location.address,
+			city: caffee.location.city,
+			category: caffee.category.name,
+			image: caffee.photos.groups[0].items[0].prefix + '200x200' + caffee.photos.groups[0].items[0].suffix
+		};
+
+		var booking = {
+			caffee: caffee,
+			message: message
+		};
+
+		bookings.push(booking);
+
+		res.json(bookings);
+	});
+
+	app.route('/api/bookings').get(function (req, res) {
+		bookings = bookings.map(function (b, index) {
+			return _.extend(b, {id: index});
+		});
+
+		res.json(bookings);
 	});
 }
 
