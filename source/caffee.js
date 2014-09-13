@@ -3,17 +3,20 @@ var caffees = require('../data/caffees');
 var bookings = require('../data/bookings');
 
 function caffee(app) {
+	function transform(c) {
+		return {
+			id: c._id,
+			name: c.name,
+			address: c.location.address,
+			city: c.location.city,
+			category: c.category.name,
+			image: c.photos.groups[0].items[0].prefix + '200x200' + c.photos.groups[0].items[0].suffix
+		};
+	}
+
+
 	app.route('/api/caffees').get(function (req, res) {
-		caffees = caffees.map(function (c) {
-			return {
-				id: c._id,
-				name: c.name,
-				address: c.location.address,
-				city: c.location.city,
-				category: c.category.name,
-				image: c.photos.groups[0].items[0].prefix + '200x200' + c.photos.groups[0].items[0].suffix
-			};
-		});
+		caffees = caffees.map(transform);
 
 		res.json(caffees);
 	});
@@ -27,14 +30,7 @@ function caffee(app) {
 			return res.status(404).end();
 		}
 
-		caffee = {
-			id: caffee._id,
-			name: caffee.name,
-			address: caffee.location.address,
-			city: caffee.location.city,
-			category: caffee.category.name,
-			image: caffee.photos.groups[0].items[0].prefix + '200x200' + caffee.photos.groups[0].items[0].suffix
-		};
+		caffee = transform(caffee);
 
 		res.json(caffee);
 	});
@@ -54,14 +50,7 @@ function caffee(app) {
 			return res.status(404).end();
 		}
 
-		caffee = {
-			id: caffee._id,
-			name: caffee.name,
-			address: caffee.location.address,
-			city: caffee.location.city,
-			category: caffee.category.name,
-			image: caffee.photos.groups[0].items[0].prefix + '200x200' + caffee.photos.groups[0].items[0].suffix
-		};
+		caffee = transform(caffee);
 
 		var booking = {
 			caffee: caffee,
