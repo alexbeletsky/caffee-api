@@ -12,7 +12,7 @@ function auth(app) {
 			return res.status(401).json({message: 'wrong credentials'});
 		}
 
-		res.status(200).end();
+		res.json({});
 	});
 }
 
