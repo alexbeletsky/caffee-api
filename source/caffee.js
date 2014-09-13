@@ -16,9 +16,9 @@ function caffee(app) {
 
 
 	app.route('/api/caffees').get(function (req, res) {
-		caffees = caffees.map(transform);
+		var c = caffees.map(transform);
 
-		res.json(caffees);
+		res.json(c);
 	});
 
 	app.route('/api/caffees/:id').get(function (req, res) {
